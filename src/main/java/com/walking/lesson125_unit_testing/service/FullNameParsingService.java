@@ -9,7 +9,7 @@ public class FullNameParsingService {
         this.fullNameValidationService = fullNameValidationService;
     }
 
-    public FullName parseName(String nameString) {
+    public FullName parseFullName(String nameString) {
         fullNameValidationService.validateFullName(nameString);
 
         String[] splitNameString = nameString.split(" ");

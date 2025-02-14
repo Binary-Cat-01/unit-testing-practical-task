@@ -27,6 +27,6 @@ class FullNameParsingServiceTest {
         String nameString = "Иванов Иван Иванович";
         FullName testFullName = new FullName("Иван", "Иванов", "Иванович");
 //        then
-        assertEquals(testFullName, fullNameParsingService.parseName(nameString));
+        assertEquals(testFullName, fullNameParsingService.parseFullName(nameString));
     }
 }
