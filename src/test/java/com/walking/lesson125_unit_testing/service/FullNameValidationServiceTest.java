@@ -63,18 +63,18 @@ class FullNameValidationServiceTest {
     @EmptySource
     @FieldSource("INVALID_FULL_NAMES")
     void validateFullName_invalidFullNames_ThrowsException(String invalidFullName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateFullName(invalidFullName);
-        //        then
-        Throwable throwable = assertThrows(RegexValidationException.class, actual);
+//        then
+        assertThrows(RegexValidationException.class, actual);
     }
 
     @ParameterizedTest
     @FieldSource("VALID_FULL_NAMES")
     void validateFullName_validFullNames_DoesNotThrowException(String validFullName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateFullName(validFullName);
-        //        then
+//        then
         assertDoesNotThrow(actual);
     }
 
@@ -82,18 +82,18 @@ class FullNameValidationServiceTest {
     @EmptySource
     @FieldSource("INVALID_NAMES")
     void validateName_invalidName_ThrowsException(String invalidName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateName(invalidName);
-        //        then
-        Throwable throwable = assertThrows(RegexValidationException.class, actual);
+//        then
+        assertThrows(RegexValidationException.class, actual);
     }
 
     @ParameterizedTest
     @FieldSource("VALID_NAMES")
     void validateName_validNames_DoesNotThrowException(String validName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateName(validName);
-        //        then
+//        then
         assertDoesNotThrow(actual);
     }
 
@@ -101,18 +101,18 @@ class FullNameValidationServiceTest {
     @EmptySource
     @FieldSource("INVALID_DOUBLE_SURNAMES")
     void validateSurname_invalidSurNames_ThrowsException(String invalidSurName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateSurname(invalidSurName);
-        //        then
-        Throwable throwable = assertThrows(RegexValidationException.class, actual);
+//        then
+        assertThrows(RegexValidationException.class, actual);
     }
 
     @ParameterizedTest
     @FieldSource("VALID_DOUBLE_SURNAMES")
     void validateSurName_validSurNames_DoesNotThrowException(String validSurName) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validateSurname(validSurName);
-        //        then
+//        then
         assertDoesNotThrow(actual);
     }
 
@@ -120,18 +120,18 @@ class FullNameValidationServiceTest {
     @EmptySource
     @FieldSource("INVALID_PATRONYMICS")
     void validatePatronymic_invalidPatronymics_ThrowsException(String invalidPatronymic) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validatePatronymic(invalidPatronymic);
-        //        then
-        Throwable throwable = assertThrows(RegexValidationException.class, actual);
+//        then
+        assertThrows(RegexValidationException.class, actual);
     }
 
     @ParameterizedTest
     @FieldSource("VALID_PATRONYMICS")
     void validatePatronymic_validPatronymics_DoesNotThrowException(String validPatronymic) {
-        //        when
+//        when
         Executable actual = () -> fullNameValidationService.validatePatronymic(validPatronymic);
-        //        then
+//        then
         assertDoesNotThrow(actual);
     }
 }

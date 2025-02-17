@@ -23,10 +23,12 @@ class FullNameParsingServiceTest {
 
     @Test
     void parse_success() {
+//        given
+        String testFullNameString = "Иванов Иван Иванович";
+        FullName validFullName = new FullName("Иван", "Иванов", "Иванович");
 //        when
-        String nameString = "Иванов Иван Иванович";
-        FullName testFullName = new FullName("Иван", "Иванов", "Иванович");
+        FullName parsedFullName = fullNameParsingService.parseFullName(testFullNameString);
 //        then
-        assertEquals(testFullName, fullNameParsingService.parseFullName(nameString));
+        assertEquals(validFullName, parsedFullName);
     }
 }
