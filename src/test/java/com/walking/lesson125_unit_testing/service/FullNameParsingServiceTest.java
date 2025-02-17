@@ -4,23 +4,21 @@ import com.walking.lesson125_unit_testing.model.FullName;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class FullNameParsingServiceTest {
+    @InjectMocks
     private FullNameParsingService fullNameParsingService;
-    static private FullNameValidationService fullNameValidationService;
 
-    @BeforeAll
-    static void beforeAll() {
-        fullNameValidationService = Mockito.mock(FullNameValidationService.class);
-    }
-
-    @BeforeEach
-    void setUp() {
-        fullNameParsingService = new FullNameParsingService(fullNameValidationService);
-    }
+    @Mock
+    private FullNameValidationService fullNameValidationService;
 
     @Test
     void parse_success() {
