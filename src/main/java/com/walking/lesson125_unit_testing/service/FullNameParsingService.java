@@ -1,5 +1,6 @@
 package com.walking.lesson125_unit_testing.service;
 
+import com.walking.lesson125_unit_testing.exception.RegexValidationException;
 import com.walking.lesson125_unit_testing.model.FullName;
 
 public class FullNameParsingService {
@@ -10,19 +11,23 @@ public class FullNameParsingService {
     }
 
     public FullName parseFullName(String nameString) {
-        fullNameValidationService.validateFullName(nameString);
+        try {
+            fullNameValidationService.validateFullName(nameString);
 
-        String[] splitNameString = nameString.split(" ");
+            String[] splitNameString = nameString.split(" ");
 
-        String surname = splitNameString[0];
-        fullNameValidationService.validateSurname(surname);
+            String surname = splitNameString[0];
+            fullNameValidationService.validateSurname(surname);
 
-        String name = splitNameString[1];
-        fullNameValidationService.validateName(name);
+            String name = splitNameString[1];
+            fullNameValidationService.validateName(name);
 
-        String patronymic = splitNameString[2];
-        fullNameValidationService.validatePatronymic(patronymic);
+            String patronymic = splitNameString[2];
+            fullNameValidationService.validatePatronymic(patronymic);
 
-        return new FullName(name, surname, patronymic);
+            return new FullName(name, surname, patronymic);
+        } catch (RegexValidationException e) {
+            throw new RuntimeException("Failed parsing fullName", e);
+        }
     }
 }
