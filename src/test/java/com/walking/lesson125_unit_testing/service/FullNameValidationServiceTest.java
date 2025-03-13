@@ -1,138 +1,166 @@
 package com.walking.lesson125_unit_testing.service;
 
 import com.walking.lesson125_unit_testing.exception.RegexValidationException;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.FieldSource;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FullNameValidationServiceTest {
-    private FullNameValidationService fullNameValidationService;
-
-    private static final List<String> INVALID_FULL_NAMES = List.of(
-            "иванов Иван Иванович",
-            "Иванов иван Иванович",
-            "Иванов Иван иванович",
-            "Иванов Иван",
-            "Ivanov Ivan");
-
-    private static final List<String> VALID_FULL_NAMES = List.of(
-            "Иванов Иван Иванович",
-            "Иванов-Иванов Иван Иванович",
-            "Иванов-Иванов И Иванович",
-            "И-Иванов И Иванович");
-
-    private static final List<String> INVALID_NAMES = List.of(
-            "иван",
-            "Ivan",
-            "Иван-иван");
-
-    private static final List<String> VALID_NAMES = List.of(
-            "Иван");
-
-    private static final List<String> INVALID_DOUBLE_SURNAMES = List.of(
-            "И-иванов",
-            "иванов-И",
-            "Иванов-И-Иванов",
-            "Ivanov-I");
-
-    private static final List<String> VALID_DOUBLE_SURNAMES = List.of(
-            "Иванов-Иванов",
-            "И-Иванов");
-
-    private static final List<String> INVALID_PATRONYMICS = List.of(
-            "иванович",
-            "Ivanovich",
-            "И",
-            "Иванович-Степанович");
-
-    private static final List<String> VALID_PATRONYMICS = List.of(
-            "Иванович");
-
-    @BeforeEach
-    void setUp() {
-        fullNameValidationService = new FullNameValidationService();
-    }
+    private final FullNameValidationService fullNameValidationService =
+            new FullNameValidationService();
 
     @ParameterizedTest
-    @EmptySource
-    @FieldSource("INVALID_FULL_NAMES")
-    void validateFullName_invalidFullNames_ThrowsException(String invalidFullName) {
-//        when
-        Executable actual = () -> fullNameValidationService.validateFullName(invalidFullName);
-//        then
-        assertThrows(RegexValidationException.class, actual);
-    }
-
-    @ParameterizedTest
-    @FieldSource("VALID_FULL_NAMES")
-    void validateFullName_validFullNames_DoesNotThrowException(String validFullName) {
+    @MethodSource("sourceValidFullName")
+    void validateFullName_success(String validFullName) {
 //        when
         Executable actual = () -> fullNameValidationService.validateFullName(validFullName);
+
 //        then
         assertDoesNotThrow(actual);
     }
 
     @ParameterizedTest
-    @EmptySource
-    @FieldSource("INVALID_NAMES")
-    void validateName_invalidName_ThrowsException(String invalidName) {
+    @MethodSource("sourceInvalidFullNames")
+    void validateFullName_failed_with_invalidFullName(String invalidFullName) {
 //        when
-        Executable actual = () -> fullNameValidationService.validateName(invalidName);
+        Executable actual = () -> fullNameValidationService.validateFullName(invalidFullName);
+
 //        then
         assertThrows(RegexValidationException.class, actual);
     }
 
+    @Test
+    void validateFullName_failed_with_null() {
+//        when
+        Executable actual = () -> fullNameValidationService.validateFullName(null);
+
+//        then
+        assertThrows(NullPointerException.class, actual);
+    }
+
     @ParameterizedTest
-    @FieldSource("VALID_NAMES")
-    void validateName_validNames_DoesNotThrowException(String validName) {
+    @MethodSource("sourceValidNames")
+    void validateName_success(String validName) {
 //        when
         Executable actual = () -> fullNameValidationService.validateName(validName);
+
 //        then
         assertDoesNotThrow(actual);
     }
 
     @ParameterizedTest
-    @EmptySource
-    @FieldSource("INVALID_DOUBLE_SURNAMES")
-    void validateSurname_invalidSurNames_ThrowsException(String invalidSurName) {
+    @MethodSource("sourceInvalidNames")
+    void validateName_failed_with_invalidName(String invalidName) {
 //        when
-        Executable actual = () -> fullNameValidationService.validateSurname(invalidSurName);
+        Executable actual = () -> fullNameValidationService.validateName(invalidName);
+
 //        then
         assertThrows(RegexValidationException.class, actual);
     }
 
-    @ParameterizedTest
-    @FieldSource("VALID_DOUBLE_SURNAMES")
-    void validateSurName_validSurNames_DoesNotThrowException(String validSurName) {
+    @Test
+    void validateName_failed_with_null() {
 //        when
-        Executable actual = () -> fullNameValidationService.validateSurname(validSurName);
+        Executable actual = () -> fullNameValidationService.validateName(null);
+
+//        then
+        assertThrows(NullPointerException.class, actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sourceValidDoubleSurnames")
+    void validateSurName_success(String validSurname) {
+//        when
+        Executable actual = () -> fullNameValidationService.validateSurname(validSurname);
+
 //        then
         assertDoesNotThrow(actual);
     }
 
     @ParameterizedTest
-    @EmptySource
-    @FieldSource("INVALID_PATRONYMICS")
-    void validatePatronymic_invalidPatronymics_ThrowsException(String invalidPatronymic) {
+    @MethodSource("sourceInvalidDoubleSurnames")
+    void validateSurname_failed_with_invalidSurname(String invalidSurname) {
 //        when
-        Executable actual = () -> fullNameValidationService.validatePatronymic(invalidPatronymic);
+        Executable actual = () -> fullNameValidationService.validateSurname(invalidSurname);
+
 //        then
         assertThrows(RegexValidationException.class, actual);
     }
 
+    @Test
+    void validateSurname_failed_with_null() {
+//        when
+        Executable actual = () -> fullNameValidationService.validateSurname(null);
+
+//        then
+        assertThrows(NullPointerException.class, actual);
+    }
+
     @ParameterizedTest
-    @FieldSource("VALID_PATRONYMICS")
-    void validatePatronymic_validPatronymics_DoesNotThrowException(String validPatronymic) {
+    @MethodSource("sourceValidPatronymics")
+    void validatePatronymic_success(String validPatronymic) {
 //        when
         Executable actual = () -> fullNameValidationService.validatePatronymic(validPatronymic);
+
 //        then
         assertDoesNotThrow(actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sourceInvalidPatronymics")
+    void validatePatronymic_failed_with_invalidPatronymic(String invalidPatronymic) {
+//        when
+        Executable actual = () -> fullNameValidationService.validatePatronymic(invalidPatronymic);
+
+//        then
+        assertThrows(RegexValidationException.class, actual);
+    }
+
+    @Test
+    void validatePatronymic_failed_with_null() {
+//        when
+        Executable actual = () -> fullNameValidationService.validatePatronymic(null);
+
+//        then
+        assertThrows(NullPointerException.class, actual);
+    }
+
+    static List<String> sourceValidFullName() {
+        return List.of("Иванов Иван Иванович", "Иванов-Иванов Иван Иванович",
+                "Иванов-Иванов И Иванович", "И-Иванов И Иванович");
+    }
+
+    static List<String> sourceInvalidFullNames() {
+        return List.of("", "иванов Иван Иванович", "Иванов иван Иванович", "Иванов Иван иванович",
+                "Иванов Иван", "Ivanov Ivan");
+    }
+
+    static List<String> sourceValidNames() {
+        return List.of("Иван");
+    }
+
+    static List<String> sourceInvalidNames() {
+        return List.of("", "иван", "Ivan", "Иван-иван");
+    }
+
+    static List<String> sourceValidDoubleSurnames() {
+        return List.of("Иванов-Иванов", "И-Иванов");
+    }
+
+    static List<String> sourceInvalidDoubleSurnames() {
+        return List.of("", "И-иванов", "иванов-И", "Иванов-И-Иванов", "Ivanov-I");
+    }
+
+    static List<String> sourceValidPatronymics() {
+        return List.of("Иванович");
+    }
+
+    static List<String> sourceInvalidPatronymics() {
+        return List.of("", "иванович", "Ivanovich", "И", "Иванович-Степанович");
     }
 }
