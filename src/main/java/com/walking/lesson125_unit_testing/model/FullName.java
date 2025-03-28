@@ -50,20 +50,24 @@ public class FullName {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         FullName fullName = (FullName) o;
-        return Objects.equals(name, fullName.name) && Objects.equals(surname, fullName.surname) && Objects.equals(
-                patronymic, fullName.patronymic);
+
+        return Objects.equals(name, fullName.name) && Objects.equals(surname, fullName.surname)
+                && Objects.equals(patronymic, fullName.patronymic);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(name);
+
         result = 31 * result + Objects.hashCode(surname);
         result = 31 * result + Objects.hashCode(patronymic);
+
         return result;
     }
 }

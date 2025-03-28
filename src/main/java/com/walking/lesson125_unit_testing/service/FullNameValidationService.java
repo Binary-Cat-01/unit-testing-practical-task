@@ -3,13 +3,10 @@ package com.walking.lesson125_unit_testing.service;
 import com.walking.lesson125_unit_testing.exception.RegexValidationException;
 
 public class FullNameValidationService {
-    public static final String FULL_NAME_REGEX = "^[А-Я][А-Яа-я-]* [А-Я][а-я]* [А-Я][а-я]+$";
-    public static final String DOUBLE_SURNAME_REGEX = "[А-Я][а-я]*-[А-Я][а-я]*";
-    public static final String NAME_REGEX = "[А-Я][а-я]*";
-    public static final String PATRONYMIC_REGEX = "[А-Я][а-я]+";
-
-    public FullNameValidationService() {
-    }
+    private static final String FULL_NAME_REGEX = "^[А-Я][А-Яа-я-]* [А-Я][а-я]* [А-Я][а-я]+$";
+    private static final String DOUBLE_SURNAME_REGEX = "[А-Я][а-я]*-[А-Я][а-я]*";
+    private static final String NAME_REGEX = "[А-Я][а-я]*";
+    private static final String PATRONYMIC_REGEX = "[А-Я][а-я]+";
 
     public void validateFullName(String nameString) {
         if (!nameString.matches(FULL_NAME_REGEX)) {
